@@ -28,7 +28,9 @@ public class Player : MonoBehaviour
             transform.position.z
         );
 
-        Shoot();
+        if (GameManager.instance.isGameOver == false) {
+            Shoot();
+        }
     }
 
     void Shoot()
@@ -41,8 +43,8 @@ public class Player : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.tag == "Enemy") {
-            Debug.Log("Game Over");
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Boss") {
+            GameManager.instance.SetGameOver();
             Destroy(gameObject);
         } else if (other.gameObject.tag == "Coin") {
             GameManager.instance.IncreaseCoin();
